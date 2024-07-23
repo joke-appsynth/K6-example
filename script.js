@@ -1,16 +1,13 @@
 import http from 'k6/http';
 import { check, sleep } from 'k6';
 
-export let options = {
+// This examples schedules 10 VUs to run constantly for a duration 30 seconds.
+export let options = { discardResponseBodies: true,
   scenarios: {
-    scenario1: {
-      executor: 'ramping-vus',
-      startVUs: 1,
-      stages: [
-        { duration: '5s', target: 10}, // Ramp-up to 10 users in 5s
-        { duration: '5s', target: 50 }, // Ramp-up to 50 users in 5s
-        { duration: '10s', target: 2}, // Ramp-down to 2 users in 10s
-      ],
+    contacts: {
+      executor: 'constant-vus',
+      vus: 10,
+      duration: '30s',
     },
   },
 }
